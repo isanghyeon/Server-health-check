@@ -1,7 +1,7 @@
 .idea/
 .DS_Store
-/src/venv/
-/src/Non-Need/
+venv/
+Non-Need/
 
 
 
