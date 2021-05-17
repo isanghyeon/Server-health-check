@@ -6,14 +6,6 @@
     }
   },
 
-  "network": {
-    "network-interface": {
-      "enp6s0": "ifconfig | grep enp6s0 -A 8",
-      "docker0": "ifconfig | grep docker -A 8",
-      "br-08c15f3adc22": "ifconfig | grep br-08c15f3adc22 -A 8"
-    }
-  },
-
   "docker-inspect": {
     "docker-container": {
       "container-id": "docker ps -a | awk '{print $1}'",

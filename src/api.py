@@ -5,13 +5,11 @@
 import json
 import os
 
+
 class ServerAPI:
     def __init__(self):
         with open('API/ReportCredential.json', 'r') as JsonParsing:
             self.ReportCredential = json.load(JsonParsing)
-
-        with open('API/ServerLog.json', 'r') as JsonParsing:
-            self.ServerLog = json.load(JsonParsing)
 
         with open('API/Command.json', 'r') as JsonParsing:
             self.Command = json.load(JsonParsing)
@@ -24,28 +22,6 @@ class ServerAPI:
             "sender": self.ReportCredential["Credential"]["send"]["E-mail-Address"],
             "sender-password": self.ReportCredential["Credential"]["send"]["E-mail-Password"],
             "receiver": self.ReportCredential["Credential"]["receive"]
-        }
-
-    def ServerLogPath(self, LogType=None, ServerType=None, LogName=None):
-        """
-        :type LogType: str
-        :type ServerType: str
-        :type LogName: str
-        :return: json
-        """
-        if LogType is None or ServerType is None or LogName is None:
-            return {
-                "LogType": None,
-                "ServerType": None,
-                "LogName": None,
-                "LogPath": None
-            }
-
-        return {
-            "LogType": LogType,
-            "ServerType": ServerType,
-            "LogName": LogName,
-            "LogPath": self.ServerLog[ServerType][LogType][LogName]
         }
 
     def ExecuteCommand(self, CMDType=None, UsedType=None, CMDName=None):

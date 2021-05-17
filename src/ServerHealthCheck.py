@@ -1,4 +1,4 @@
-# ! /usr/bin/python3.8
+# ! /usr/local/bin/python3
 # -*- coding:utf-8 -*-
 # Copyright 2021. LOGOS - Cryptography Application Lab. all rights reserved.
 # Made by LOGOS - Lee Sang-Hyeon.
@@ -16,20 +16,15 @@
 
 import datetime
 from Report import SendServerStatusforDiscord
-from xml.etree.ElementTree import Element, dump
 from Server_Status import HostServerStatus, DockerServerStatus
 import os
 
 
 def ServerStatus():
     HostServer = HostServerStatus().Memory_Used(), HostServerStatus().Storage_Used()
-    DockerServer = DockerServerStatus().Container_ID_Name(), DockerServerStatus().Container_Network()
-    print(HostServer)
-    print(DockerServer)
-
-
-def XMLReWriter():
-    pass
+    DockerServer = DockerServerStatus().Container_Info()
+    # print(HostServer)
+    # print(DockerServer)
 
 
 def ExecuteCommand(Command):
