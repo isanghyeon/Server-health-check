@@ -2,7 +2,7 @@
 # Copyright 2021. LOGOS - Cryptography Application Lab. all rights reserved.
 # Made by LOGOS - Lee Sang-Hyeon.
 
-from API_Return import ServerAPI
+from api import ServerAPI
 
 
 class HostServerStatus:

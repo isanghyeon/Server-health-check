@@ -18,37 +18,44 @@ import datetime
 from Report import SendServerStatusforDiscord
 from xml.etree.ElementTree import Element, dump
 from Server_Status import HostServerStatus, DockerServerStatus
+import os
 
 
 def ServerStatus():
-    HostServer_health = HostServerStatus()
-    DockerServer_health = DockerServerStatus()
+    HostServer = HostServerStatus().Memory_Used(), HostServerStatus().Storage_Used()
+    DockerServer = DockerServerStatus().Container_ID_Name(), DockerServerStatus().Container_Network()
+    print(HostServer)
+    print(DockerServer)
 
 
-def XMLWriter():
+def XMLReWriter():
     pass
 
 
-def container():
-    return "hello"
+def ExecuteCommand(Command):
+    return os.system(Command)
 
 
 if __name__ == '__main__':
+    ServerStatus()
     """
     Web-hook URL 
         LSH : 838953823451480134/xPbLNRqT-Rg4k_H7a3kQJUQsRHx8X8yvh3Hl3-auxDIJLScML-GdKhI9ncsHiUxiNsvG 
         LOGOS : 840869197374291968/avpWEpIJNXhYO9XfIHw0-KzD7DCD_bkV3ALW2AjW1DxxE7fO5p5jVnoFGc7Yib51Ad3q 
     """
-    DateTime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    DiscordReport = SendServerStatusforDiscord(
+
+    """
+        DateTime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        DiscordReport = SendServerStatusforDiscord(
         WebHook_URL="838953823451480134/xPbLNRqT-Rg4k_H7a3kQJUQsRHx8X8yvh3Hl3-auxDIJLScML-GdKhI9ncsHiUxiNsvG",
         Response="200",
         Report_Title="Server die",
         Date=DateTime,
-        Message=f"""Container ID : {container()}, Container Name : {container()} \n""",
+        Message=f"Container ID : {container()}, Container Name : {container()}",
         ServerStatusCode="500",
         Error_Point="DB server",
         Error_Log="Demon not restarted"
-    )
+        )
 
-    DiscordReport.SendDiscordMessage()
+        DiscordReport.SendDiscordMessage()
+    """

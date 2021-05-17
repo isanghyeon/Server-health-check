@@ -3,7 +3,7 @@
 # Made by LOGOS - Lee Sang-Hyeon.
 
 import json
-
+import os
 
 class ServerAPI:
     def __init__(self):
@@ -21,9 +21,9 @@ class ServerAPI:
         :return: json
         """
         return {
-            "sender": self.ReportCredential["send"]["E-mail-Address"],
-            "sender-password": self.ReportCredential["send"]["E-mail-Password"],
-            "receive": self.ReportCredential["receive"]
+            "sender": self.ReportCredential["Credential"]["send"]["E-mail-Address"],
+            "sender-password": self.ReportCredential["Credential"]["send"]["E-mail-Password"],
+            "receiver": self.ReportCredential["Credential"]["receive"]
         }
 
     def ServerLogPath(self, LogType=None, ServerType=None, LogName=None):
@@ -67,7 +67,7 @@ class ServerAPI:
             "CMDType": CMDType,
             "UsedType": UsedType,
             "CMDName": CMDName,
-            "Command": self.Command[CMDType][UsedType][CMDName]
+            "Command": os.system(self.Command[CMDType][UsedType][CMDName])
         }
 
 

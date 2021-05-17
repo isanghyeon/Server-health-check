@@ -5,7 +5,7 @@
 import smtplib
 import datetime
 from email.mime.text import MIMEText
-from API_Return import *
+from api import *
 from discord_webhook import DiscordWebhook
 
 
@@ -45,7 +45,7 @@ class SendServerStatusforDiscord:
         self.Error_Point = kwargs.get("Error_Point")
         self.Error_Log = kwargs.get("Error_Log")
 
-        self.Report_Message = f"""\n
+        self.Report_Message = f"""
             Response: {self.Response} 
             Report Title:  {self.Report_Title} 
             Report Date:  {self.Report_Date} 
