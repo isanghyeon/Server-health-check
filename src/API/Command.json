@@ -8,9 +8,10 @@
 
   "docker-inspect": {
     "docker-container": {
-      "container-id": "docker ps -a | awk '{print $1}'",
-      "container-name": "docker ps -a | awk '{print $7}'",
-      "container-live": "docker ps -a | awk '{print $4}'"
+      "container-id": "docker ps -a | grep \"Exited\" | awk '{print $1}'",
+      "container-name": "docker ps -a | grep \"Exited\" | awk '{print $12}'",
+      "container-health-check": "docker ps -a | grep \"Exited\"",
+      "container-time": "docker ps -a | grep \"Exited\" | awk '{print $7, $8}'"
     }
   }
 

@@ -20,37 +20,53 @@ from Server_Status import HostServerStatus, DockerServerStatus
 import os
 
 
-def ServerStatus():
-    HostServer = HostServerStatus().Memory_Used(), HostServerStatus().Storage_Used()
-    DockerServer = DockerServerStatus().Container_Info()
-    # print(HostServer)
-    # print(DockerServer)
+def ExecuteCMD(Command):
+    return os.popen(Command).read()
 
 
-def ExecuteCommand(Command):
-    return os.system(Command)
+def ServerStatus(ServerType=None):
+    if ServerType == "HostServer":
+        HostServer = HostServerStatus().Memory_Used(), HostServerStatus().Storage_Used()
+
+        for idx in range(len(HostServer)):
+            Command = HostServer[idx]["Command"]
+            Result = ExecuteCMD(Command)
+
+    elif ServerType == "DockerServer":
+        DockerServer = DockerServerStatus().Container_Info()
+
+        for idx in DockerServer.keys():
+            Command = DockerServer[idx]["Command"]
+            Result = ExecuteCMD(Command)
+
+    else:
+        return "Error"
 
 
 if __name__ == '__main__':
-    ServerStatus()
-    """
-    Web-hook URL 
+    import logging
+    logging.basicConfig(filename='example.log', level=logging.DEBUG)
+    logging.debug('This message should go to the log file')
+    logging.info('So should this')
+    logging.warning('And this, too')
+    logging.error('And non-ASCII stuff, too, like Øresund and Malmö')
+    """ 
+    Web-hook URL s
         LSH : 838953823451480134/xPbLNRqT-Rg4k_H7a3kQJUQsRHx8X8yvh3Hl3-auxDIJLScML-GdKhI9ncsHiUxiNsvG 
         LOGOS : 840869197374291968/avpWEpIJNXhYO9XfIHw0-KzD7DCD_bkV3ALW2AjW1DxxE7fO5p5jVnoFGc7Yib51Ad3q 
     """
 
-    """
-        DateTime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        DiscordReport = SendServerStatusforDiscord(
+    ServerStatus("DockerServer")
+
+    DiscordReport = SendServerStatusforDiscord(
         WebHook_URL="838953823451480134/xPbLNRqT-Rg4k_H7a3kQJUQsRHx8X8yvh3Hl3-auxDIJLScML-GdKhI9ncsHiUxiNsvG",
         Response="200",
-        Report_Title="Server die",
-        Date=DateTime,
-        Message=f"Container ID : {container()}, Container Name : {container()}",
+        Report_Title="Docker container down",
+        Date=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+        Message=f"""\n{os.popen('df -h').read()}""",
         ServerStatusCode="500",
         Error_Point="DB server",
         Error_Log="Demon not restarted"
-        )
+    )
 
-        DiscordReport.SendDiscordMessage()
-    """
+    # DiscordReport.SendDiscordMessage()

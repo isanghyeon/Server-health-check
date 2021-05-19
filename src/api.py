@@ -43,7 +43,5 @@ class ServerAPI:
             "CMDType": CMDType,
             "UsedType": UsedType,
             "CMDName": CMDName,
-            "Command": os.system(self.Command[CMDType][UsedType][CMDName])
+            "Command": self.Command[CMDType][UsedType][CMDName]
         }
-
-
