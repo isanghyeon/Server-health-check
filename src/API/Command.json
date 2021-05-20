@@ -10,7 +10,7 @@
     "docker-container": {
       "container-id": "docker ps -a | grep \"Exited\" | awk '{print $1}'",
       "container-name": "docker ps -a | grep \"Exited\" | awk '{print $12}'",
-      "container-health-check": "docker ps -a | grep \"Exited\"",
+      "container-health-check": "docker ps -a | grep \"Exited\" | awk '{print $5, $6}'",
       "container-time": "docker ps -a | grep \"Exited\" | awk '{print $7, $8}'"
     }
   }
