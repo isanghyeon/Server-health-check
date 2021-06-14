@@ -30,4 +30,4 @@ do
         docker restart $line
         echo "========================================" 
 done
-docker exec 9fc5a1a8d9b1 service apache2 restart
+docker exec $LOGOS_WEB_SERVER_CID service apache2 restart
