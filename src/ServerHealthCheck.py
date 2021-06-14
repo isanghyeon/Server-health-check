@@ -44,14 +44,15 @@ def ServerStatus(ServerType=None):
 
 
 if __name__ == '__main__':
+    """ 
     import logging
     logging.basicConfig(filename='example.log', level=logging.DEBUG)
     logging.debug('This message should go to the log file')
     logging.info('So should this')
     logging.warning('And this, too')
     logging.error('And non-ASCII stuff, too, like Øresund and Malmö')
-    """ 
-    Web-hook URL s
+    
+    Web-hook URL 
         LSH : 838953823451480134/xPbLNRqT-Rg4k_H7a3kQJUQsRHx8X8yvh3Hl3-auxDIJLScML-GdKhI9ncsHiUxiNsvG 
         LOGOS : 840869197374291968/avpWEpIJNXhYO9XfIHw0-KzD7DCD_bkV3ALW2AjW1DxxE7fO5p5jVnoFGc7Yib51Ad3q 
     """
@@ -69,4 +70,4 @@ if __name__ == '__main__':
         Error_Log="Demon not restarted"
     )
 
-    # DiscordReport.SendDiscordMessage()
+    DiscordReport.SendDiscordMessage()
