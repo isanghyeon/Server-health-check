@@ -32,21 +32,18 @@ class SendServerStatusforDiscord:
         self.Container_Failed_Time = kwargs.get("Container_Failed_Time")
 
         self.Backup_Container_ID = kwargs.get("Backup_Container_ID")
-        self.Backup_Container_Name = kwargs.get("Backup_Container_Name")
-        self.Backup_Container_Status = kwargs.get("Backup_Container_Status")
-        self.Backup_Container_Restart_Time = kwargs.get("Backup_Container_Restart_Time")
+        self.Backup_Container_Date = kwargs.get("Backup_Container_Date")
 
         self.Backup_Path = kwargs.get("Backup_Path")
         self.Backup_File_Name = kwargs.get("Backup_File_Name")
-        self.Backup_Date = kwargs.get("Backup_Date")
 
         self.Report_Message = f"""
 **----------------------------------------------------------------------**
 **LOGOS Server health check**
 
-`Report Title : {self.Report_Title}
+`Report Title : {self.Report_Title}`
 `Report Status :  {self.Report_Status}`
-`Report Date : {self.Report_Date}
+`Report Date : {self.Report_Date}`
 
 **> container information**
 `- Container ID : {self.Container_ID}`
@@ -56,14 +53,11 @@ class SendServerStatusforDiscord:
 
 **> used information**
 `- Backup Container ID : {self.Backup_Container_ID}`
-`- Backup Container Name : {self.Backup_Container_Name}`
-`- Backup Container Status : {self.Backup_Container_Status}`
-`- Backup Container Restarted Time : {self.Backup_Container_Restart_Time}`
+`- Backup Container Date : {self.Backup_Container_Date}`
 
 **> backups information**
 `- Backup Path : {self.Backup_Path}`
 `- Backup File Name : {self.Backup_File_Name}`
-`- Backup Date : {self.Backup_Date}`
 **----------------------------------------------------------------------**
         """
 
