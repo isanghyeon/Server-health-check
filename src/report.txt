@@ -1,0 +1,21 @@
+
+LOGOS Server health check
+
+Report status :  Good
+Report Date : yyyy-mm-dd hh:mm:ss
+Report Title : Container failed restarted
+
+# container information
+Container ID : 123123123
+Container status code : 127
+Container failed time : yyyy-mm-dd hh:mm:ss
+
+# backups information
+Backup Container ID : 123123123
+Backup date : yyyy-mm-dd
+Backup Container status : Good, Failed
+Backup Container restarted time : yyyy-mm-dd hh:mm:ss
+
+# used information
+Backup data path : /var/backups/ServerBackups
+Backup Container file name : aa17219a26b4_20210614.tar

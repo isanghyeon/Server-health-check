@@ -1,18 +1,9 @@
 {
-  "memory": {
-    "usage": {
-      "MemoryUsed": "cat /proc/meminfo | grep Mem",
-      "StorageUsed": "df -h"
-    }
-  },
-
-  "docker-inspect": {
-    "docker-container": {
-      "container-id": "docker ps -a | grep \"Exited\" | awk '{print $1}'",
-      "container-name": "docker ps -a | grep \"Exited\" | awk '{print $12}'",
-      "container-health-check": "docker ps -a | grep \"Exited\" | awk '{print $5, $6}'",
-      "container-time": "docker ps -a | grep \"Exited\" | awk '{print $7, $8}'"
-    }
-  }
-
+  "get-container-id": "docker ps -a | grep \"Exited\" | awk '{print $1}'",
+  "get-container-name": "docker ps -a | grep \"Exited\" | awk '{print $12}'",
+  "get-container-status": "docker ps -a | grep \"Exited\" | awk '{print $8}'",
+  "get-container-exited-time": "docker ps -a | grep \"Exited\" | awk '{print $9, $10, $11}'",
+  "get-backup-container-id": "ls -al /var/backups/ServerBackups/ | awk '{print $9}' | grep ",
+  "get-backup-container-date": "ls -al /var/backups/ServerBackups/ | awk '{print $9}' | grep",
+  "get-backup-file-name": "ls -al /var/backups/ServerBackups/ | awk '{print $9}' | grep "
 }

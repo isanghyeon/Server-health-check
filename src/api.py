@@ -3,44 +3,49 @@
 
 import json
 import os
+import datetime
 
 
 class ServerAPI:
     def __init__(self):
-        with open('API/ReportCredential.json', 'r') as JsonParsing:
-            self.ReportCredential = json.load(JsonParsing)
-
         with open('API/Command.json', 'r') as JsonParsing:
-            self.Command = json.load(JsonParsing)
+            self.CommandJson = json.load(JsonParsing)
+
+        # Get environment variable
+        self.SenderEmailAddress = os.environ.get("SENDER_EMAIL_ADDR")
+        self.SenderEmailPassword = os.environ.get("SENDER_EMAIL_PW")
+        self.ReceiverEmailAddress = os.environ.get("RECEIVER_EMAIL_ADDR")
+        self.DiscordWebhookUrl = os.environ.get("DISCORD_WEBHOOK_ID")
+        self.BackupPath = os.environ.get("BACKUP_PATH")
+
+        # Get DateTime
+        self.DateTime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        self.Date = datetime.datetime.now().strftime('%Y-%m-%d')
 
     def MailReportCredential(self):
         """
         :return: json
         """
         return {
-            "sender": self.ReportCredential["Credential"]["send"]["E-mail-Address"],
-            "sender-password": self.ReportCredential["Credential"]["send"]["E-mail-Password"],
-            "receiver": self.ReportCredential["Credential"]["receive"]
+            "sender": self.SenderEmailAddress,
+            "sender-password": self.SenderEmailPassword,
+            "receiver": self.ReceiverEmailAddress
         }
 
-    def ExecuteCommand(self, CMDType=None, UsedType=None, CMDName=None):
+    def ExecuteCommand(self, Command=None):
         """
-        :type CMDType: str
-        :type UsedType: str
-        :type CMDName: str
-        :return: json
+        :type Command: str
         """
-        if CMDType is None or UsedType is None or CMDName is None:
-            return {
-                    "CMDType": None,
-                    "UsedType": None,
-                    "CMDName": None,
-                    "Command": None
-            }
+        return os.popen(self.CommandJson[Command]).read()
 
-        return {
-            "CMDType": CMDType,
-            "UsedType": UsedType,
-            "CMDName": CMDName,
-            "Command": self.Command[CMDType][UsedType][CMDName]
-        }
+    def DiscordReportCredential(self):
+        return self.DiscordWebhookUrl
+
+    def ReturnDate(self):
+        return self.Date
+
+    def ReturnDateTime(self):
+        return self.DateTime
+
+    def ReturnBackupPath(self):
+        return self.BackupPath

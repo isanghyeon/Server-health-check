@@ -2,21 +2,14 @@
 # Made by LOGOS - Lee Sang-Hyeon.
 
 import smtplib
-import datetime
 from email.mime.text import MIMEText
 from api import *
 from discord_webhook import DiscordWebhook
 
 
-class XML_ReWrite:
-    def __init__(self):
-        pass
-
-
 class SendServerStatusforDiscord:
     """
         Report for Server Status
-
         Discord Bot Token: "N/A"
         Web Hook URL: "N/A"
     """
@@ -26,32 +19,52 @@ class SendServerStatusforDiscord:
         Init Report for Server Status
         :param WebHook_URL: LOGOS discord channel web-hook url
         :type WebHook_URL: str
-        :keyword Response: Server response message
-        :keyword Report_Title: Server health check report title
-        :keyword Date: Server health check report time
-        :keyword Report_Message: report message
-        :keyword ServerStatusCode: server status code
-        :keyword Error_Point: error point
-        :keyword Error_Log: error log
         """
 
-        self.webhook_url = "https://discord.com/api/webhooks/" + WebHook_URL
-        self.Response = kwargs.get("Response")
+        self.webhook_url = WebHook_URL
+        self.Report_Status = kwargs.get("Report_Status")
+        self.Report_Date = kwargs.get("Report_Date")
         self.Report_Title = kwargs.get("Report_Title")
-        self.Report_Date = kwargs.get("Date")
-        self.Message = kwargs.get("Message")
-        self.ServerStatusCode = kwargs.get("ServerStatusCode")
-        self.Error_Point = kwargs.get("Error_Point")
-        self.Error_Log = kwargs.get("Error_Log")
+
+        self.Container_ID = kwargs.get("Container_ID")
+        self.Container_Name = kwargs.get("Container_Name")
+        self.Container_Status_Code = kwargs.get("Container_Status_Code")
+        self.Container_Failed_Time = kwargs.get("Container_Failed_Time")
+
+        self.Backup_Container_ID = kwargs.get("Backup_Container_ID")
+        self.Backup_Container_Name = kwargs.get("Backup_Container_Name")
+        self.Backup_Container_Status = kwargs.get("Backup_Container_Status")
+        self.Backup_Container_Restart_Time = kwargs.get("Backup_Container_Restart_Time")
+
+        self.Backup_Path = kwargs.get("Backup_Path")
+        self.Backup_File_Name = kwargs.get("Backup_File_Name")
+        self.Backup_Date = kwargs.get("Backup_Date")
 
         self.Report_Message = f"""
-            Response: {self.Response} 
-            Report Title:  {self.Report_Title} 
-            Report Date:  {self.Report_Date} 
-            Message:  {self.Message} 
-            Server status: {self.ServerStatusCode} 
-            Error point:  {self.Error_Point} 
-            Error Log:  {self.Error_Log}
+**----------------------------------------------------------------------**
+**LOGOS Server health check**
+
+`Report Title : {self.Report_Title}
+`Report Status :  {self.Report_Status}`
+`Report Date : {self.Report_Date}
+
+**> container information**
+`- Container ID : {self.Container_ID}`
+`- Container Name : {self.Container_Name}`
+`- Container Status Code : {self.Container_Status_Code}`
+`- Container Failed Time : {self.Container_Failed_Time}`
+
+**> used information**
+`- Backup Container ID : {self.Backup_Container_ID}`
+`- Backup Container Name : {self.Backup_Container_Name}`
+`- Backup Container Status : {self.Backup_Container_Status}`
+`- Backup Container Restarted Time : {self.Backup_Container_Restart_Time}`
+
+**> backups information**
+`- Backup Path : {self.Backup_Path}`
+`- Backup File Name : {self.Backup_File_Name}`
+`- Backup Date : {self.Backup_Date}`
+**----------------------------------------------------------------------**
         """
 
         self.webhook = DiscordWebhook(

@@ -14,60 +14,26 @@
         5.
 """
 
-import datetime
 from Report import SendServerStatusforDiscord
-from Server_Status import HostServerStatus, DockerServerStatus
-import os
-
-
-def ExecuteCMD(Command):
-    return os.popen(Command).read()
-
-
-def ServerStatus(ServerType=None):
-    if ServerType == "HostServer":
-        HostServer = HostServerStatus().Memory_Used(), HostServerStatus().Storage_Used()
-
-        for idx in range(len(HostServer)):
-            Command = HostServer[idx]["Command"]
-            Result = ExecuteCMD(Command)
-
-    elif ServerType == "DockerServer":
-        DockerServer = DockerServerStatus().Container_Info()
-
-        for idx in DockerServer.keys():
-            Command = DockerServer[idx]["Command"]
-            Result = ExecuteCMD(Command)
-
-    else:
-        return "Error"
-
+from api import ServerAPI
 
 if __name__ == '__main__':
-    """ 
-    import logging
-    logging.basicConfig(filename='example.log', level=logging.DEBUG)
-    logging.debug('This message should go to the log file')
-    logging.info('So should this')
-    logging.warning('And this, too')
-    logging.error('And non-ASCII stuff, too, like Øresund and Malmö')
-    
-    Web-hook URL 
-        LSH : 838953823451480134/xPbLNRqT-Rg4k_H7a3kQJUQsRHx8X8yvh3Hl3-auxDIJLScML-GdKhI9ncsHiUxiNsvG 
-        LOGOS : 840869197374291968/avpWEpIJNXhYO9XfIHw0-KzD7DCD_bkV3ALW2AjW1DxxE7fO5p5jVnoFGc7Yib51Ad3q 
-    """
-
-    ServerStatus("DockerServer")
-
     DiscordReport = SendServerStatusforDiscord(
-        WebHook_URL="838953823451480134/xPbLNRqT-Rg4k_H7a3kQJUQsRHx8X8yvh3Hl3-auxDIJLScML-GdKhI9ncsHiUxiNsvG",
-        Response="200",
-        Report_Title="Docker container down",
-        Date=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-        Message=f"""\n{os.popen('df -h').read()}""",
-        ServerStatusCode="500",
-        Error_Point="DB server",
-        Error_Log="Demon not restarted"
+        WebHook_URL=ServerAPI().DiscordReportCredential(),
+        Report_Title="Container failed restarted",
+        Report_Status="Good",
+        Report_Date=ServerAPI().ReturnDateTime(),
+        Container_ID=ServerAPI().ExecuteCommand("get-container-id"),
+        Container_Name=ServerAPI().ExecuteCommand("get-container-name"),
+        Container_Status_Code=ServerAPI().ExecuteCommand("get-container-status"),
+        Container_Failed_Time=ServerAPI().ExecuteCommand("get-container-exited-time"),
+        Backup_Container_ID=ServerAPI().ExecuteCommand("get-backup-container-id") + ServerAPI().ExecuteCommand(
+            "get-container-id"),
+        Backup_Container_Date=ServerAPI().ExecuteCommand("get-backup-container-date") + ServerAPI().ReturnDate(),
+        Backup_Path=ServerAPI().ReturnBackupPath(),
+        Backup_File_Name=ServerAPI().ExecuteCommand("get-backup-file-name") + ServerAPI().ExecuteCommand(
+            "get-backup-container-id") + ServerAPI().ExecuteCommand(
+            "get-container-id") + "_" + ServerAPI().ExecuteCommand(
+            "get-backup-container-date") + ServerAPI().ReturnDate()
     )
-
     DiscordReport.SendDiscordMessage()
